@@ -39,6 +39,8 @@ media
 # File-based project format
 *.iws
 
+/uploads
+
 # IntelliJ
 out/
 

@@ -7,12 +7,17 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     username = None
-    email = models.EmailField(_('email address'), unique=True)
-    name = models.CharField(max_length=200)
+    phone_number = models.CharField(_('phone number'), unique=True , max_length=20 , null=True , blank=True)
 
-    USERNAME_FIELD = 'email'
+    name = models.CharField(max_length=200 , null=True , blank=True)
+    email = models.EmailField(_('email address') , null=True , blank=True)
+
+    USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []
-    auth_code = models.CharField(max_length=200)
+
+    mobile_is_verified = models.BooleanField(default=False)
+    email_is_verified = models.BooleanField(default=False)
+
     objects = CustomUserManager()
 
     def __str__(self):

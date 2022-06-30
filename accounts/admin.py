@@ -7,20 +7,22 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ('email','is_staff', 'is_active',)
-    list_filter = ('email','name', 'is_staff', 'is_active',)
+    list_display = ('phone_number','is_staff', 'is_active',)
+    list_filter = ('phone_number','name', 'is_staff', 'is_active',)
     fieldsets = (
-        (None, {'fields': ('name','email', 'password' )}),
+        ('Requirements', {'fields': ('phone_number', 'password' )}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
+        ('Account Status', {'fields': ('mobile_is_verified', 'email_is_verified')}),
+        ('Personal Information', {'fields': ('name','email')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email','name', 'password1', 'password2', 'is_staff', 'is_active')}
+            'fields': ('phone_number', 'password1', 'password2', 'is_staff', 'is_active')}
         ),
     )
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('phone_number',)
+    ordering = ('phone_number',)
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
