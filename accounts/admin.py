@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import Profile, User
 
 
-class CustomUserAdmin(UserAdmin):
-    model = CustomUser
+class UserAdminForm(UserAdmin):
+    model = User
     list_display = ('phone_number','is_staff', 'is_active',)
     list_filter = ('phone_number','name', 'is_staff', 'is_active',)
     fieldsets = (
@@ -25,4 +25,5 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('phone_number',)
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(User, UserAdminForm)
+admin.site.register(Profile)

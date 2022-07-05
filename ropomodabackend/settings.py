@@ -156,7 +156,7 @@ REST_FRAMEWORK = {
 }
 
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.User'
 # LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'home'
 
