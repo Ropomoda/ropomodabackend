@@ -27,7 +27,100 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+PASSWORDLESS_AUTH = {
+    # Allowed auth types, can be EMAIL, MOBILE, or both.
+    'PASSWORDLESS_AUTH_TYPES': ['MOBILE'],
 
+    # URL Prefix for Authentication Endpoints
+    'PASSWORDLESS_AUTH_PREFIX': 'api/v1/auth/',
+    
+    #  URL Prefix for Verification Endpoints
+    'PASSWORDLESS_VERIFY_PREFIX': 'api/v1/auth/verify/',
+
+    # Amount of time that tokens last, in seconds
+    'PASSWORDLESS_TOKEN_EXPIRE_TIME': 3 * 60,
+
+    # The user's email field name
+    'PASSWORDLESS_USER_EMAIL_FIELD_NAME': 'email',
+
+    # The user's mobile field name
+    'PASSWORDLESS_USER_MOBILE_FIELD_NAME': 'mobile',
+
+    # Marks itself as verified the first time a user completes auth via token.
+    # Automatically unmarks itself if email is changed.
+    'PASSWORDLESS_USER_MARK_EMAIL_VERIFIED': False,
+    'PASSWORDLESS_USER_EMAIL_VERIFIED_FIELD_NAME': 'email_is_verified',
+
+    # Marks itself as verified the first time a user completes auth via token.
+    # Automatically unmarks itself if mobile number is changed.
+    'PASSWORDLESS_USER_MARK_MOBILE_VERIFIED': False,
+    'PASSWORDLESS_USER_MOBILE_VERIFIED_FIELD_NAME': 'mobile_is_verified',
+
+    # The email the callback token is sent from
+    'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': None,
+
+    # The email subject
+    'PASSWORDLESS_EMAIL_SUBJECT': "Your Login Token",
+
+    # A plaintext email message overridden by the html message. Takes one string.
+    'PASSWORDLESS_EMAIL_PLAINTEXT_MESSAGE': "Enter this token to sign in: %s",
+
+    # The email template name.
+    'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': "passwordless_default_token_email.html",
+
+    # Your twilio number that sends the callback tokens.
+    'PASSWORDLESS_MOBILE_NOREPLY_NUMBER': None,
+
+    # The message sent to mobile users logging in. Takes one string.
+    'PASSWORDLESS_MOBILE_MESSAGE': "Use this code to log in: %s",
+
+    # Registers previously unseen aliases as new users.
+    'PASSWORDLESS_REGISTER_NEW_USERS': True,
+
+    # Suppresses actual SMS for testing
+    'PASSWORDLESS_TEST_SUPPRESSION': False,
+
+    # Context Processors for Email Template
+    'PASSWORDLESS_CONTEXT_PROCESSORS': [],
+
+    # The verification email subject
+    'PASSWORDLESS_EMAIL_VERIFICATION_SUBJECT': "Your Verification Token",
+
+    # A plaintext verification email message overridden by the html message. Takes one string.
+    'PASSWORDLESS_EMAIL_VERIFICATION_PLAINTEXT_MESSAGE': "Enter this verification code: %s",
+
+    # The verification email template name.
+    'PASSWORDLESS_EMAIL_VERIFICATION_TOKEN_HTML_TEMPLATE_NAME': "passwordless_default_verification_token_email.html",
+
+    # The message sent to mobile users logging in. Takes one string.
+    'PASSWORDLESS_MOBILE_VERIFICATION_MESSAGE': "Enter this verification code: %s",
+
+    # Automatically send verification email or sms when a user changes their alias.
+    'PASSWORDLESS_AUTO_SEND_VERIFICATION_TOKEN': False,
+
+    # What function is called to construct an authentication tokens when
+    # exchanging a passwordless token for a real user auth token. This function
+    # should take a user and return a tuple of two values. The first value is
+    # the token itself, the second is a boolean value representating whether
+    # the token was newly created.
+    'PASSWORDLESS_AUTH_TOKEN_CREATOR': 'drfpasswordless.utils.create_authentication_token',
+    
+    # What function is called to construct a serializer for drf tokens when
+    # exchanging a passwordless token for a real user auth token.
+    'PASSWORDLESS_AUTH_TOKEN_SERIALIZER': 'drfpasswordless.serializers.TokenResponseSerializer',
+
+    # A dictionary of demo user's primary key mapped to their static pin
+    'PASSWORDLESS_DEMO_USERS': {},
+
+    # configurable function for sending email
+    'PASSWORDLESS_EMAIL_CALLBACK': 'drfpasswordless.utils.send_email_with_callback_token',
+    
+    # configurable function for sending sms
+    'PASSWORDLESS_SMS_CALLBACK': 'utils.sms.verification_sms',
+
+    # Token Generation Retry Count
+    'PASSWORDLESS_TOKEN_GENERATION_ATTEMPTS': 3
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +131,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'drfpasswordless',
     'store_management',
     'blog_management',
     'accounts',
@@ -132,7 +227,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# https://docs.django project.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/static/'
@@ -144,6 +239,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -153,8 +250,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    ('rest_framework.authentication.TokenAuthentication',)
 }
-
 
 AUTH_USER_MODEL = 'accounts.User'
 # LOGIN_REDIRECT_URL = 'home'
