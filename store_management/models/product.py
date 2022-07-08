@@ -6,9 +6,10 @@ from .category import Category
 class Product(models.Model):
     code = models.IntegerField(unique=True , default=100000)
     name = models.CharField(max_length=60)
+    slug = models.SlugField(unique=True)
     price = models.IntegerField(default=0)
     count = models.IntegerField(default=0)
-    category = models.ManyToManyField(Category, default=1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField(
         max_length=250, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/products/' )

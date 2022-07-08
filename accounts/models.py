@@ -24,7 +24,7 @@ class User(AbstractUser):
         return self.mobile
 
 class Profile(models.Model):
-    user = models.OneToOneField('User' , on_delete=models.PROTECT , primary_key=True)
-    name = models.CharField(max_length=250)
+    user = models.ForeignKey('User' , on_delete=models.CASCADE  )
+    name = models.CharField(_('Name'),max_length=250 , default="کاربر روپومدا")
     def __str__(self):
-        return self.user.phone_number
+        return self.name
