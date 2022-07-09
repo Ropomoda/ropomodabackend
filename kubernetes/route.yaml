@@ -1,0 +1,19 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: django
+  labels:
+    app: django-route
+  annotations:
+spec:
+  host: django-mormoroth.apps.ir-thr-at1.arvan.run
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  to:
+    kind: Service
+    name: django-service
+    weight: 100
+  wildcardPolicy: None

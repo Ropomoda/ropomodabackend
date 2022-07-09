@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: django
+          command: ['python', 'manage.py', 'migrate']
+          image: mormoroth/django:shop
+          env:
+            - name: DB_NAME
+              value: djangotest
+            - name: DB_USER
+              value: root
+            - name: DB_PASS
+              value: djangotest
+            - name: DB_HOST
+              value: postgresql-svc
+            - name: DB_PORT
+              value: '5432'
+            - name: DB_SCHEMA
+              value: public
+          resources:
+            limits:
+              cpu: '1'
+              ephemeral-storage: 2G
+              memory: 1G
+            requests:
+              cpu: '1'
+              ephemeral-storage: 2G
+              memory: 1G
+      restartPolicy: Never
+  backoffLimit: 5

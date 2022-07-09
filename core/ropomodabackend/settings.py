@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-3r%n10476l2+f0^=!p^z=4+n6ui91x9!1381uoj#&4qefv6q^&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 PASSWORDLESS_AUTH = {
     # Allowed auth types, can be EMAIL, MOBILE, or both.
@@ -263,3 +264,21 @@ AUTH_USER_MODEL = 'accounts.User'
 CACHE_TTL = 60 * 15
 
 # GRAPPELLI_ADMIN_TITLE = 'Ropo Moda Admin'
+
+
+
+
+if not DEBUG:
+    DATABASES =  {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'OPTIONS': {
+            'options': '-c search_path=' + os.getenv('DB_SCHEMA')
+        },
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    }
+    }

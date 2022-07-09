@@ -1,0 +1,15 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: postgresql-adminer-route
+spec:
+  host: postgresql-adminer-mormoroth.apps.ir-thr-at1.arvan.run
+  to:
+    kind: Service
+    name: postgresql-svc
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+  wildcardPolicy: None
