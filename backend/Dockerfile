@@ -1,12 +1,12 @@
-FROM python:3
+FROM python:3.9.7-slim
 
-# USER app
-ENV PYTHONUNBUFFERED 1
-# RUN mkdir /db
-#RUN chown app:app -R /db
+COPY . /app
+WORKDIR /app
 
-RUN mkdir /code
-WORKDIR /code
-ADD requirements.txt /code/
-RUN pip install -r requirements.txt
-ADD . /code/
+RUN python3 -m venv /opt/venv
+
+RUN /opt/venv/bin/pip install pip --upgrade && \
+    /opt/venv/bin/pip install --default-timeout=100 -r requirements.txt && \
+    chmod +x entrypoint.sh
+
+CMD ["/app/entrypoint.sh"]
