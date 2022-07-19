@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ropomoda-backend-master
+  labels:
+    app: ropomoda-backend-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ropomoda-backend-master
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: ropomoda-backend-master
+        name: ropomoda-backend-master
+    spec:
+      containers:
+        - name: ropomoda-backend-master
+          image: https://registry.ropomoda.com/ropomoda-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              protocol: TCP
+              name: http
+          resources:
+            limits:
+              &a1
+              cpu: "1"
+              ephemeral-storage: 1G
+              memory: 1G
+            requests: *a1
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts: []
+          env:
+            - name: prod
+              value: DJANGO_MODE
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: docker-reg-2oumtvjh
+      volumes: []
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: docker-reg-2oumtvjh
+stringData:
+  .dockerconfigjson: '{"auths":{"https://registry.ropomoda.com":{"username":"ropomoda","password":"DfT4HHsNsDKSZFZ6VhubrehRg4qxAbxKR","auth":"cm9wb21vZGE6RGZUNEhIc05zREtTWkZaNlZodWJyZWhSZzRxeEFieEtS"}}}'
+type: kubernetes.io/dockerconfigjson
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: ropomoda-backend-master-custom
+spec:
+  host: api.ropomoda.com
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  to:
+    kind: Service
+    name: ropomoda-backend-master
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ropomoda-backend-master
+  name: ropomoda-backend-master
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      targetPort: http
+      port: 80
+  selector:
+    app: ropomoda-backend-master
+  type: ClusterIP
