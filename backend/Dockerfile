@@ -5,8 +5,8 @@ WORKDIR /app
 
 RUN python3 -m venv /opt/venv
 
-RUN /opt/venv/bin/pip install pip --upgrade && \
+RUN /opt/venv/bin/pip install --default-timeout=100 pip --upgrade && \
     /opt/venv/bin/pip install --default-timeout=100 -r requirements.txt && \
     chmod +x entrypoint.sh
 
-CMD ["/app/entrypoint.sh"]
+CMD ["chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"]

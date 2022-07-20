@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3r%n10476l2+f0^=!p^z=4+n6ui91x9!1381uoj#&4qefv6q^&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_MODE') != 'prod' 
 
 ALLOWED_HOSTS = ['*']
 
@@ -272,9 +272,6 @@ if not DEBUG:
     DATABASES =  {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'OPTIONS': {
-            'options': '-c search_path=' + os.getenv('DB_SCHEMA')
-        },
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASS'),
