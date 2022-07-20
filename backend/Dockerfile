@@ -9,4 +9,5 @@ RUN /opt/venv/bin/pip install --default-timeout=100 pip --upgrade && \
     /opt/venv/bin/pip install --default-timeout=100 -r requirements.txt && \
     chmod +x entrypoint.sh
 
-CMD ["chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"]
+
+CMD ["/app/entrypoint.sh"]
