@@ -1,6 +1,7 @@
 Django==3.2
 django-redis==5.2.0
 djangorestframework==3.13.1
+django-cors-headers==3.13.0
 drfpasswordless
 Pillow==9.1.1
 requests==2.28.0
