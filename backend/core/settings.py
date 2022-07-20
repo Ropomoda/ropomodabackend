@@ -135,6 +135,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'ckeditor',
     'drfpasswordless',
     'store_management',
     'blog_management',
@@ -262,12 +263,12 @@ AUTH_USER_MODEL = 'accounts.User'
 # LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'home'
 
-
+CKEDITOR_FILENAME_GENERATOR = 'accounts.utils.generate_uuid4_filename'
+AWS_QUERYSTRING_AUTH = False
 
 CACHE_TTL = 60 * 15
 
 # GRAPPELLI_ADMIN_TITLE = 'Ropo Moda Admin'
-
 
 
 
@@ -282,3 +283,5 @@ if not DEBUG:
         'PORT': os.getenv('DB_PORT'),
     }
     }
+
+from .cdn.conf import * # s3
