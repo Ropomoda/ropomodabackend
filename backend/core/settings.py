@@ -138,8 +138,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_rename_app',
     'drfpasswordless',
-    'store',
     'account',
+    'store',
+    'billing',
 ]
 
 MIDDLEWARE = [
