@@ -7,7 +7,7 @@ class Order(models.Model):
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
-    user = models.ForeignKey(to='accounts.Profile' , on_delete=models.CASCADE )
+    user = models.ForeignKey(to='account.Profile' , on_delete=models.CASCADE )
 
     STATUS_CHOICES = (
         (0 , "INITIATED"),

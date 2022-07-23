@@ -136,10 +136,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'ckeditor',
+    'django_rename_app',
     'drfpasswordless',
-    'store_management',
-    'blog_management',
-    'accounts',
+    'store',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -259,11 +259,11 @@ REST_FRAMEWORK = {
     ('rest_framework.authentication.TokenAuthentication',)
 }
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'account.User'
 # LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'home'
 
-CKEDITOR_FILENAME_GENERATOR = 'accounts.utils.generate_uuid4_filename'
+CKEDITOR_FILENAME_GENERATOR = 'account.utils.generate_uuid4_filename'
 AWS_QUERYSTRING_AUTH = False
 
 CACHE_TTL = 60 * 15

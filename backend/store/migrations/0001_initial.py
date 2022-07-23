@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('accounts', '0001_initial'),
+        ('account', '0001_initial'),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('parent', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='store_management.category')),
+                ('parent', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to='store.category')),
             ],
             options={
                 'verbose_name': 'Category',
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('status', models.IntegerField(choices=[(0, 'INITIATED'), (1, 'ACCEPTED_PROCESSING'), (2, 'DELIVERED_POSTOFFICE'), (3, 'DELIVERY_AGENT_SENT')])),
                 ('payment_method', models.IntegerField(choices=[(0, 'ZARRIN_PAL'), (1, 'COD')])),
                 ('payment_status', models.BooleanField(default=False)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.profile')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='account.profile')),
             ],
             options={
                 'verbose_name': 'Order',
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 ('count', models.IntegerField(default=0)),
                 ('description', models.TextField(blank=True, default='', max_length=250, null=True)),
                 ('image', models.ImageField(upload_to='uploads/products/')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='store_management.category')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='store.category')),
             ],
         ),
         migrations.CreateModel(
@@ -58,8 +58,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('count', models.IntegerField()),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='store_management.order')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='store_management.product')),
+                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='store.order')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='store.product')),
             ],
             options={
                 'verbose_name': 'OrderRow',

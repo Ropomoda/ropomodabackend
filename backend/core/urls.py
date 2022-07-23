@@ -22,8 +22,8 @@ admin.site.site_title = "Ropo Moda Admin"
 admin.site.index_title = "Welcome to Ropo Moda Admin"
 
 urlpatterns = [
-    path('api/v1/account/', include('accounts.urls')),
-    path('api/v1/store/', include('store_management.urls')),
+    path('api/v1/account/', include('account.urls')),
+    path('api/v1/store/', include('store.urls')),
     path('', include('drfpasswordless.urls')),
     path('admin/', admin.site.urls),
 ]
