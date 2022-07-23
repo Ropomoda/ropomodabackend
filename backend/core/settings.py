@@ -136,11 +136,20 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'ckeditor',
-    'django_rename_app',
     'drfpasswordless',
     'account',
-    'store',
+    'ad',
     'billing',
+    'cart',
+    'category',
+    'collection',
+    'comment',
+    'gift',
+    'notice',
+    'order',
+    'seller',
+    'store',
+    'ticket',
 ]
 
 MIDDLEWARE = [
