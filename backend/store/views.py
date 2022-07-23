@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import routers, serializers, viewsets
 
-from .models.product import *
+from .models import *
 from .serializers import *
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -10,6 +10,3 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
     
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer

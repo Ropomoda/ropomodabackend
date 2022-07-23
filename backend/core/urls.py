@@ -13,17 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
+API_VERSION = getattr(settings, "API_VERSION", None)
 
 admin.site.site_header = "Ropo Moda Admin"
 admin.site.site_title = "Ropo Moda Admin"
 admin.site.index_title = "Welcome to Ropo Moda Admin"
 
 urlpatterns = [
-    path('api/v1/account/', include('account.urls')),
-    path('api/v1/store/', include('store.urls')),
+    path(f'{API_VERSION}/account/', include('account.urls')),
+    path(f'{API_VERSION}/store/', include('store.urls')),
+    path(f'{API_VERSION}/category/', include('category.urls')),
     path('', include('drfpasswordless.urls')),
     path('admin/', admin.site.urls),
 ]

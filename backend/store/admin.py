@@ -4,8 +4,5 @@ from .models import *
 
 
 admin.site.register(Product)
-admin.site.register(Order)
-admin.site.register(OrderRow)
-admin.site.register(Category)
 
 

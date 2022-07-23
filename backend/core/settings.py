@@ -24,7 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3r%n10476l2+f0^=!p^z=4+n6ui91x9!1381uoj#&4qefv6q^&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_MODE') != 'prod' 
+DEBUG = False
+
+if os.getenv('DJANGO_MODE') == 'production':
+    DEBUG =  False 
+elif os.getenv('DJANGO_MODE') == 'development':
+    DEBUG =  True 
 
 ALLOWED_HOSTS = ['*']
 
@@ -261,12 +266,12 @@ AUTHENTICATION_BACKENDS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+API_VERSION = "v1"
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES':
-    ('rest_framework.authentication.TokenAuthentication',)
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',),
 }
 
 AUTH_USER_MODEL = 'account.User'
@@ -284,14 +289,20 @@ CACHE_TTL = 60 * 15
 
 if not DEBUG:
     DATABASES =  {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASS'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASS'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+        }
     }
+    REST_FRAMEWORK = REST_FRAMEWORK | {
+        'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        )
     }
+    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 from .cdn.conf import * # s3
