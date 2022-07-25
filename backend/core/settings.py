@@ -293,6 +293,9 @@ CACHE_TTL = 60 * 15
 
 
 if not DEBUG:
+
+    # database config
+
     DATABASES =  {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -303,11 +306,30 @@ if not DEBUG:
             'PORT': os.getenv('DB_PORT'),
         }
     }
+
+    # rest framework config
+
     REST_FRAMEWORK = REST_FRAMEWORK | {
         'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         )
     }
+    
+    # secret key config
+    
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-
-from .cdn.conf import * # s3
+    
+    # cache config
+    
+    CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.getenv('CACHE_LOCATION'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": os.getenv('CACHE_KEY_PREFIX')
+    }
+    }
+    # s3 storage config
+    from .cdn.conf import * # s3
