@@ -9,7 +9,6 @@ from rest_framework import status
 
 
 class ProductList(APIView):
-    # permission_classes = []
     def get(self, request, format=None):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)

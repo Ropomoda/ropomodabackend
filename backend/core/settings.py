@@ -138,6 +138,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "graphene_django",
     'rest_framework',
     'rest_framework.authtoken',
     'ckeditor',
@@ -272,6 +273,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',),
+}
+
+GRAPHENE = {
+    "SCHEMA": "core.schema.schema"
 }
 
 AUTH_USER_MODEL = 'account.User'

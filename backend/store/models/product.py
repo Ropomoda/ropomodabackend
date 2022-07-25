@@ -3,13 +3,18 @@ from django.db import models
 
 class Product(models.Model):
     code = models.AutoField(unique=True , default=602940 , primary_key=True)
-    name = models.CharField(max_length=250)
+    title_fa = models.CharField(max_length=300)
+    title_en = models.CharField(max_length=300 , default='')
     slug = models.CharField(unique=True , max_length=350)
-    price = models.IntegerField(default=0)
-    count = models.IntegerField(default=0)
+    rrp_price = models.IntegerField(default=0)
+    selling_price = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=0)
     category = models.ForeignKey('category.Category', on_delete=models.CASCADE)
     description = models.TextField(default='', blank=True, null=True)
-    image = models.ImageField(upload_to='uploads/products/')
+    image = models.ImageField(upload_to="images/store/")
+    is_deleted = models.BooleanField(default=False , blank=True , null=True)
+    created_time = models.DateTimeField(auto_now_add=True)
+    modified_time = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def get_products_by_id(ids):

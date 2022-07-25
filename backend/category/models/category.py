@@ -7,10 +7,10 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
 
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='uploads/products/' , default="")
+    image = models.ImageField(upload_to="images/category/" , default="")
     parent = models.ForeignKey(
         'Category' ,
-        on_delete=models.CASCADE ,
+        on_delete=models.CASCADE,
         null=True ,
         blank=True ,
         default=None
