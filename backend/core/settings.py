@@ -40,10 +40,10 @@ PASSWORDLESS_AUTH = {
     'PASSWORDLESS_AUTH_TYPES': ['MOBILE'],
 
     # URL Prefix for Authentication Endpoints
-    'PASSWORDLESS_AUTH_PREFIX': 'api/v1/account/',
+    'PASSWORDLESS_AUTH_PREFIX': 'v1/account/',
     
     #  URL Prefix for Verification Endpoints
-    'PASSWORDLESS_VERIFY_PREFIX': 'api/v1/account/verify/',
+    'PASSWORDLESS_VERIFY_PREFIX': 'v1/account/verify/',
 
     # Amount of time that tokens last, in seconds
     'PASSWORDLESS_TOKEN_EXPIRE_TIME': 3 * 60,

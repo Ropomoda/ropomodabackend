@@ -3,6 +3,7 @@ django-redis==5.2.0
 djangorestframework==3.13.1
 django-cors-headers==3.13.0
 django-storages
+django-mptt
 drfpasswordless
 requests
 Pillow==9.1.1
@@ -11,3 +12,4 @@ gunicorn
 psycopg2-binary
 boto3
 django-ckeditor
+graphene-django

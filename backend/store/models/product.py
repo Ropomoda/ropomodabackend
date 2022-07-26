@@ -1,8 +1,10 @@
 from django.db import models
+from app.models import Extensions
+from store.utils import product_image_path
 
 
-class Product(models.Model):
-    code = models.AutoField(unique=True , default=602940 , primary_key=True)
+class Product(Extensions):
+    code = models.IntegerField(db_index=True , default=100000 )
     title_fa = models.CharField(max_length=300)
     title_en = models.CharField(max_length=300 , default='')
     slug = models.CharField(unique=True , max_length=350)
@@ -10,11 +12,17 @@ class Product(models.Model):
     selling_price = models.IntegerField(default=0)
     quantity = models.IntegerField(default=0)
     category = models.ForeignKey('category.Category', on_delete=models.CASCADE)
+    is_promotion = models.BooleanField(default=False)
+    active_collection = models.ForeignKey('collection.Collection', 
+        on_delete=models.CASCADE , 
+        null=True , 
+        blank=True , 
+        default=None
+    )
     description = models.TextField(default='', blank=True, null=True)
-    image = models.ImageField(upload_to="images/store/")
-    is_deleted = models.BooleanField(default=False , blank=True , null=True)
-    created_time = models.DateTimeField(auto_now_add=True)
-    modified_time = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to=product_image_path)
+    seller = models.ForeignKey('seller.Seller' , on_delete=models.CASCADE)
+    is_deleted = models.BooleanField(default=False)
 
     @staticmethod
     def get_products_by_id(ids):
@@ -32,4 +40,4 @@ class Product(models.Model):
             return Product.get_all_products()
 
     def __str__(self):
-        return self.name
+        return f'{self.title_fa} {self.code}'

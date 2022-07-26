@@ -29,6 +29,9 @@ urlpatterns = [
     path(f'{API_VERSION}/account/', include('account.urls')),
     path(f'{API_VERSION}/store/', include('store.urls')),
     path(f'{API_VERSION}/category/', include('category.urls')),
+    path(f'{API_VERSION}/collection/', include('collection.urls')),
+    path(f'{API_VERSION}/seller/', include('seller.urls')),
+    
     path('', include('drfpasswordless.urls')),
     path('admin/', admin.site.urls),
     path(r"graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),

@@ -16,7 +16,7 @@ def send_template_sms(parameters , to , template):
     """
         parameters is a list of { Parameter , ParameterValue } 
     """
-    c = requests.post(f"{sms_panel_address}UltraFastSend/UserApiKey" , json={
+    requests.post(f"{sms_panel_address}UltraFastSend/UserApiKey" , json={
     "ParameterArray": parameters,
     "Mobile":to,
     "TemplateId": template,
