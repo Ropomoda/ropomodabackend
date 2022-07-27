@@ -1,8 +1,8 @@
 from django.db import models
-from app.models import TimeStampedModel
+from app.models import BaseUUIDModel
 
 
-class Notice(TimeStampedModel):
+class Notice(BaseUUIDModel):
     class Meta:
         verbose_name = "Notice"
         verbose_name_plural = "Notices"

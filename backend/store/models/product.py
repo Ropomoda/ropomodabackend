@@ -1,9 +1,9 @@
 from django.db import models
-from app.models import Extensions
+from app.models import BaseUUIDModel
 from store.utils import product_image_path
 
 
-class Product(Extensions):
+class Product(BaseUUIDModel):
     code = models.IntegerField(db_index=True , default=100000 )
     title_fa = models.CharField(max_length=300)
     title_en = models.CharField(max_length=300 , default='')

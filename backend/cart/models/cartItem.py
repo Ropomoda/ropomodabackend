@@ -1,9 +1,9 @@
 from django.db import models
 
-from app.models import TimeStampedModel
+from app.models import BaseUUIDModel
 
 
-class CartItem(TimeStampedModel):
+class CartItem(BaseUUIDModel):
     class Meta:
         verbose_name = "CartItem"
         verbose_name_plural = "CartItems"

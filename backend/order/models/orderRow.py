@@ -1,9 +1,8 @@
 from django.db import models
 
-from app.models import TimeStampedModel
+from app.models import BaseUUIDModel
 
-
-class OrderRow(TimeStampedModel):
+class OrderRow(BaseUUIDModel):
     class Meta:
         verbose_name = "OrderRow"
         verbose_name_plural = "OrderRows"

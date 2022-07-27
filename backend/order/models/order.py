@@ -1,9 +1,9 @@
 from django.db import models
 
-from app.models import Extensions
+from app.models import BaseUUIDModel
 
 
-class Order(Extensions):
+class Order(BaseUUIDModel):
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
@@ -32,5 +32,5 @@ class Order(Extensions):
     def get_all_orders_of_user():
         return Order.objects.all()
     def __str__(self):
-        return f"{ self.uuid} {self.buyer.name}" 
+        return f"{ self.id} {self.buyer.name}" 
 

@@ -1,9 +1,9 @@
 from django.db import models
 
-from app.models import Extensions
+from app.models import BaseUUIDModel
 
 
-class Cart(Extensions):
+class Cart(BaseUUIDModel):
     class Meta:
         verbose_name = "Cart"
         verbose_name_plural = "Carts"

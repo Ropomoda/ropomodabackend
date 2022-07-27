@@ -12,19 +12,19 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         
 
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Profile
         fields = [
             'user',
             'name', 
         ]
-        depth = 1
+
         
 class AddressSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Address
         fields = [
-            'profile',
             'name',
             'description', 
             'longitude', 
@@ -36,7 +36,8 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
             'floor', 
             'post_code', 
         ]
-        depth = 2
+    
+
 
 
 

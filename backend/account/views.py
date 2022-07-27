@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
 from rest_framework.views import APIView
@@ -30,11 +31,11 @@ class UserDetail(APIView):
 class AddressDetail(APIView):
     permission_classes=[IsAuthenticated]
     serializer_class = AddressSerializer
-    def get(self, request):
+    def get(self, request, id):
         user = self.request.user
         profile = Profile.objects.get(user=user)
-        address = Address.objects.filter(profile=profile)
+        address = get_object_or_404(Address,profile=profile , id=id)
         serializer_context={'request': request}
-        serializer = AddressSerializer(address , many=True , context=serializer_context)
+        serializer = AddressSerializer(address ,  context=serializer_context)
         return Response(serializer.data)
 

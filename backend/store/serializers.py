@@ -7,6 +7,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
         fields = [
+                    'id',
                     'code',
                     'title_fa', 
                     'title_en', 

@@ -2,9 +2,9 @@
 from django.db import models
 
 from seller.utils import seller_logo_path
-from app.models import TimeStampedModel
+from app.models import BaseUUIDModel
 
-class Seller(TimeStampedModel):
+class Seller(BaseUUIDModel):
     class Meta:
         verbose_name = "Seller"
         verbose_name_plural = "Sellers"

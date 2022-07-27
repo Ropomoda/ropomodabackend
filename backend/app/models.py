@@ -9,10 +9,13 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 
-class Extensions(TimeStampedModel):
-    uuid = models.UUIDField(db_index=True , default=uuid.uuid4, editable=False)
+class BaseUUIDModel(TimeStampedModel):
+    id = models.UUIDField(db_index=True , default=uuid.uuid4, editable=False , primary_key=True)
 
     class Meta:
         abstract = True
 
         
+class SoftDeleteModel(BaseUUIDModel):
+    class Meta:
+        abstract = True

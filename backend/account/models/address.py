@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy  as _
 
-from app.models import Extensions
+from app.models import BaseUUIDModel
 
 
-class Address(Extensions):
+class Address(BaseUUIDModel):
     class Meta:
         verbose_name = "Address"
         verbose_name_plural = "Addresses"

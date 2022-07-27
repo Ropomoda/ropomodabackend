@@ -2,8 +2,10 @@
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
 from .models import *
+from account.serializers import AddressSerializer
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
+    address = AddressSerializer()
     class Meta:
         model = Order
         fields = [
