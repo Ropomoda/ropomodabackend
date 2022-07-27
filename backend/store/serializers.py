@@ -7,6 +7,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
         fields = [
+                    'code',
                     'title_fa', 
                     'title_en', 
                     'slug', 
@@ -14,6 +15,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
                     'selling_price', 
                     'quantity', 
                     'category', 
+                    'active_collection',
                     'is_promotion',
                     'description',
                     'image',

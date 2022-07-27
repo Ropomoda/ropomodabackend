@@ -21,9 +21,13 @@ class Order(Extensions):
         (0 , "ZARRIN_PAL"),
         (1 , "COD"),
     )
+    address = models.ForeignKey('account.Address' , on_delete=models.CASCADE)
     payment_method = models.IntegerField(choices=PAYMENT_METHOD_CHOICES)
     is_payed = models.BooleanField(default=False)
 
+    @staticmethod
+    def init():
+        pass
     @staticmethod
     def get_all_orders_of_user():
         return Order.objects.all()
