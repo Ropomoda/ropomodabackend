@@ -10,7 +10,8 @@ class Product(BaseUUIDModel):
     slug = models.CharField(unique=True , max_length=350)
     rrp_price = models.IntegerField(default=0)
     selling_price = models.IntegerField(default=0)
-    quantity = models.IntegerField(default=0)
+    inventory = models.IntegerField(default=0)
+    max_quantity = models.IntegerField(default=1)
     category = models.ForeignKey('category.Category', on_delete=models.CASCADE)
     is_promotion = models.BooleanField(default=False)
     active_collection = models.ForeignKey('collection.Collection', 

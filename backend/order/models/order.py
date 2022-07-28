@@ -1,14 +1,17 @@
+import django
 from django.db import models
 
 from app.models import BaseUUIDModel
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class Order(BaseUUIDModel):
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
-    buyer = models.ForeignKey(to='account.Profile' , on_delete=models.CASCADE )
+    buyer = models.ForeignKey(to=User , on_delete=models.CASCADE )
 
     STATUS_CHOICES = (
         (0 , "INITIATED"),

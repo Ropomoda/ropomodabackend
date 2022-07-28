@@ -1,20 +1,35 @@
+from django.shortcuts import get_object_or_404
 from store.models.product import Product
 from .models import *
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from account.models import Profile
+from rest_framework.exceptions import PermissionDenied , NotAcceptable
 
-class CartItemCreate(APIView):
+class CartItemAPIView(APIView):
     permission_classes=[IsAuthenticated]
     serializer_class = CartSerializer
     def post(self, request):
         user = self.request.user
-        profile = Profile.objects.get(user=user)
-        cart = Cart.objects.get(profile=profile)
-        product = Product.objects.get(id=request.data["product"])
-        print(cart)
+        cart = get_object_or_404(Cart,user=user)
+        product = get_object_or_404(Product,pk=request.data["product"])
+        current_item = CartItem.objects.filter(cart=cart , product=product)
+
+        if product.seller == user:
+            return PermissionDenied("This is Your Product")
+        if len(current_item) > 0:
+            return NotAcceptable("You Already have this item in your cart")
+        
+        try:
+            quantity = int(request.data["quantity"])
+        except Exception as e:
+            return NotAcceptable("Please Enter your quantity")
+
+        if quantity > product.inventory:
+            return NotAcceptable("Your Entered quantity is more then inventory")
+        if quantity > product.max_quantity:
+            return NotAcceptable("Your Entered quantity is more then max allowed quantity")
         cartItem = CartItemSerializer(data=request.data)
         cartItem.cart = cart
         cartItem.product = product

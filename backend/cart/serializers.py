@@ -3,15 +3,15 @@ from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
 
 from .models import *
-from account.serializers import ProfileSerializer
+from account.serializers import UserSerializer
 from store.serializers import ProductSerializer
 
 class CartSerializer(serializers.HyperlinkedModelSerializer):
-    profile = ProfileSerializer()
+    user = UserSerializer()
     class Meta:
         model = Cart
         fields = [
-            'profile',
+            'user',
         ]
         
 class CartItemSerializer(serializers.HyperlinkedModelSerializer):

@@ -33,8 +33,7 @@ class AddressDetail(APIView):
     serializer_class = AddressSerializer
     def get(self, request, id):
         user = self.request.user
-        profile = Profile.objects.get(user=user)
-        address = get_object_or_404(Address,profile=profile , id=id)
+        address = get_object_or_404(Address,user=user , id=id)
         serializer_context={'request': request}
         serializer = AddressSerializer(address ,  context=serializer_context)
         return Response(serializer.data)

@@ -10,8 +10,7 @@ class OrderList(APIView):
     serializer_class = OrderSerializer
     def get(self, request):
         user = self.request.user
-        profile = Profile.objects.get(user=user)
-        orders = Order.objects.filter(buyer=profile)
+        orders = Order.objects.filter(buyer=user)
         serializer_context={'request': request}
         serializer = OrderSerializer(orders, many=True , context=serializer_context)
         return Response(serializer.data)
