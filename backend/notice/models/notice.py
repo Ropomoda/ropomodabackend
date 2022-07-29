@@ -1,8 +1,8 @@
 from django.db import models
-from app.models import BaseUUIDModel
+from app.models import Extensions
 
 
-class Notice(BaseUUIDModel):
+class Notice(Extensions):
     class Meta:
         verbose_name = "Notice"
         verbose_name_plural = "Notices"

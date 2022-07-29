@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-
+from safedelete.models import SafeDeleteModel , SOFT_DELETE_CASCADE
 
 class TimeStampedModel(models.Model):
     created_time = models.DateTimeField(auto_now_add=True , db_index=True)
@@ -8,14 +8,12 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
-
-class BaseUUIDModel(TimeStampedModel):
+        
+class Extensions(TimeStampedModel,SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     id = models.UUIDField(db_index=True , default=uuid.uuid4, editable=False , primary_key=True)
 
     class Meta:
         abstract = True
 
         
-class SoftDeleteModel(BaseUUIDModel):
-    class Meta:
-        abstract = True

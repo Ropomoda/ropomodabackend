@@ -2,12 +2,12 @@
 from django.db import models
 
 from seller.utils import seller_logo_path
-from app.models import BaseUUIDModel
+from app.models import Extensions
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class Seller(BaseUUIDModel):
+class Seller(Extensions):
     class Meta:
         verbose_name = "Seller"
         verbose_name_plural = "Sellers"

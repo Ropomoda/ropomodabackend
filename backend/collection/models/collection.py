@@ -1,10 +1,10 @@
 from django.db import models
 
-from app.models import BaseUUIDModel
+from app.models import Extensions
 
 from collection.utils import collection_image_path
 
-class Collection(BaseUUIDModel):
+class Collection(Extensions):
     class Meta:
         verbose_name = "Collection"
         verbose_name_plural = "Collections"

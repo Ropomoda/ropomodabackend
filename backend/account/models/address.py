@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy  as _
 
-from app.models import BaseUUIDModel
+from app.models import Extensions
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class Address(BaseUUIDModel):
+class Address(Extensions):
     class Meta:
         verbose_name = "Address"
         verbose_name_plural = "Addresses"
@@ -25,4 +25,4 @@ class Address(BaseUUIDModel):
     post_code = models.CharField(max_length=20)
     
     def __str__(self):
-        return self.user.mobile
+        return f'{self.id} {self.user.mobile}'

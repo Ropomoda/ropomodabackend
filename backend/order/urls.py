@@ -1,5 +1,7 @@
 from .views import *
 
 urlpatterns = [
-    path('', OrderList.as_view() , name="order-list"),
+    path('', OrderAPIView.as_view() , name="order-list-create"),
+    path('<uuid:pk>/', OrderView.as_view() , name="order-detail"),
+    path('<uuid:pk>/item/', OrderRowAPIView.as_view() , name="order-list-create"),
 ]

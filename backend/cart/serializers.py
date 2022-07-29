@@ -15,15 +15,14 @@ class CartSerializer(serializers.HyperlinkedModelSerializer):
         ]
         
 class CartItemSerializer(serializers.HyperlinkedModelSerializer):
-    cart = CartSerializer()
     product = ProductSerializer()
 
     class Meta:
         model = CartItem
         fields = [
-            'cart',
+            'id',
             'product',
-            'count',
+            'quantity',
         ]
         
 

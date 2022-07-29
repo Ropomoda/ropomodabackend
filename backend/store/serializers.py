@@ -2,8 +2,9 @@
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
 from .models import *
-
+from seller.serializers import SellerSerializer
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
+    seller = SellerSerializer()
     class Meta:
         model = Product
         fields = [
@@ -14,7 +15,8 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
                     'slug', 
                     'rrp_price', 
                     'selling_price', 
-                    'quantity', 
+                    'inventory', 
+                    'max_quantity', 
                     'category', 
                     'active_collection',
                     'is_promotion',

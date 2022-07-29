@@ -16,8 +16,6 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-from graphene_django.views import GraphQLView
-from django.views.decorators.csrf import csrf_exempt
 
 API_VERSION = getattr(settings, "API_VERSION", None)
 
@@ -38,5 +36,4 @@ urlpatterns = [
     
     path('', include('drfpasswordless.urls')),
     path('admin/', admin.site.urls),
-    path(r"graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]

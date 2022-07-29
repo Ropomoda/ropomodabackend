@@ -1,15 +1,15 @@
 from django.db import models
 
-from app.models import BaseUUIDModel
+from app.models import Extensions
 
-class OrderRow(BaseUUIDModel):
+class OrderRow(Extensions):
     class Meta:
         verbose_name = "OrderRow"
         verbose_name_plural = "OrderRows"
 
     order = models.ForeignKey('Order',on_delete=models.CASCADE)
     product = models.ForeignKey('store.Product',on_delete=models.CASCADE)
-    count = models.IntegerField()
+    quantity = models.IntegerField()
 
     @staticmethod
     def get_all_order_rows_od_order():

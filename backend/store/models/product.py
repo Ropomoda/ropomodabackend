@@ -1,9 +1,17 @@
 from django.db import models
-from app.models import BaseUUIDModel
-from store.utils import product_image_path
+from django.utils.translation import ugettext_lazy as _
+from app.models import Extensions
+from store.utils import product_image_path, product_main_image_path
 
 
-class Product(BaseUUIDModel):
+class ProductImage(Extensions):
+    title_fa = models.CharField(max_length=300, default='تصویر محصول')
+    title_en = models.CharField(max_length=300 , default='product image')
+    url = models.ImageField(verbose_name=_("image"),upload_to=product_image_path)
+    product = models.ForeignKey('Product', default=None, on_delete=models.RESTRICT)
+    def __str__(self):
+        return f'{self.id} {self.product.title_fa}'
+class Product(Extensions):
     code = models.IntegerField(db_index=True , default=100000 )
     title_fa = models.CharField(max_length=300)
     title_en = models.CharField(max_length=300 , default='')
@@ -12,7 +20,7 @@ class Product(BaseUUIDModel):
     selling_price = models.IntegerField(default=0)
     inventory = models.IntegerField(default=0)
     max_quantity = models.IntegerField(default=1)
-    category = models.ForeignKey('category.Category', on_delete=models.CASCADE)
+    category = models.ForeignKey('category.Category', on_delete=models.RESTRICT)
     is_promotion = models.BooleanField(default=False)
     active_collection = models.ForeignKey('collection.Collection', 
         on_delete=models.CASCADE , 
@@ -21,9 +29,8 @@ class Product(BaseUUIDModel):
         default=None
     )
     description = models.TextField(default='', blank=True, null=True)
-    image = models.ImageField(upload_to=product_image_path)
-    seller = models.ForeignKey('seller.Seller' , on_delete=models.CASCADE)
-    is_deleted = models.BooleanField(default=False)
+    main_image = models.ImageField(verbose_name=_("main image"),upload_to=product_main_image_path)
+    seller = models.ForeignKey('seller.Seller' , on_delete=models.RESTRICT)
 
     @staticmethod
     def get_products_by_id(ids):

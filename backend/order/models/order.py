@@ -1,12 +1,12 @@
 import django
 from django.db import models
 
-from app.models import BaseUUIDModel
+from app.models import Extensions
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class Order(BaseUUIDModel):
+class Order(Extensions):
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
@@ -15,9 +15,13 @@ class Order(BaseUUIDModel):
 
     STATUS_CHOICES = (
         (0 , "INITIATED"),
-        (1 , "ACCEPTED_PROCESSING"),
-        (2 , "DELIVERED_POSTOFFICE"),
-        (3 , "DELIVERY_AGENT_SENT"),
+        (3 , "ACCEPTED_PROCESSING"),
+        (6 , "DELIVERED_POSTOFFICE"),
+        (9 , "DELIVERY_AGENT_SENT"),
+        (11 , "DELIVERY_CUSTOMER"),
+        (12 , "CANCELED_BY_USER"),
+        (13 , "CANCELED_BY_SELLER"),
+        (14 , "CANCELED_BY_SELLER"),
     )
     status = models.IntegerField(choices=STATUS_CHOICES , default=0)
     PAYMENT_METHOD_CHOICES = (
@@ -27,13 +31,8 @@ class Order(BaseUUIDModel):
     address = models.ForeignKey('account.Address' , on_delete=models.CASCADE)
     payment_method = models.IntegerField(choices=PAYMENT_METHOD_CHOICES)
     is_payed = models.BooleanField(default=False)
-
-    @staticmethod
-    def init():
-        pass
-    @staticmethod
-    def get_all_orders_of_user():
-        return Order.objects.all()
+    is_closed = models.BooleanField(default=False)
+    
     def __str__(self):
-        return f"{ self.id} {self.buyer.name}" 
+        return f"{self.id} {self.buyer.mobile}" 
 
