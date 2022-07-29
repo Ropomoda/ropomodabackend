@@ -12,7 +12,6 @@ class Order(Extensions):
         verbose_name_plural = "Orders"
 
     buyer = models.ForeignKey(to=User , on_delete=models.CASCADE )
-
     STATUS_CHOICES = (
         (0 , "INITIATED"),
         (3 , "ACCEPTED_PROCESSING"),

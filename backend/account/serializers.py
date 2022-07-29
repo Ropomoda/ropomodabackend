@@ -25,6 +25,7 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Address
         fields = [
+            'id',
             'name',
             'description', 
             'longitude', 
