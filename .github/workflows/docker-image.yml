@@ -33,7 +33,8 @@ jobs:
       - name: Build the Docker image 
         env:
           TAG_NAME: v${{ steps.date.outputs.date }}
-        run: docker build . --file ./backend/Dockerfile --tag registry.ropomoda.com/backend:$TAG_NAME
+        working-directory: ./backend
+        run: docker build . --file ./Dockerfile --tag registry.ropomoda.com/backend:$TAG_NAME
 
       - name: Push the Docker image
         env:
