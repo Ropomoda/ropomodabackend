@@ -16,11 +16,11 @@ class Order(Extensions):
         (0 , "INITIATED"),
         (3 , "ACCEPTED_PROCESSING"),
         (6 , "DELIVERED_POSTOFFICE"),
-        (9 , "DELIVERY_AGENT_SENT"),
+        (9 , "DELIVERY_POSTMAN"),
         (11 , "DELIVERY_CUSTOMER"),
         (12 , "CANCELED_BY_USER"),
         (13 , "CANCELED_BY_SELLER"),
-        (14 , "CANCELED_BY_SELLER"),
+        (14 , "CANCELED_BY_ADMIN"),
     )
     status = models.IntegerField(choices=STATUS_CHOICES , default=0)
     PAYMENT_METHOD_CHOICES = (
