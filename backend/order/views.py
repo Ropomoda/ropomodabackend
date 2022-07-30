@@ -42,7 +42,7 @@ class OrderAPIView(ListCreateAPIView):
 
         try:
             address_id = request.data["address"]
-            address = get_object_or_404(Address,pk=address_id)
+            address = get_object_or_404(Address,uuid=address_id)
         except Exception as e:
             raise NotAcceptable("Please Enter an Address")
 
@@ -65,6 +65,8 @@ class OrderView(RetrieveDestroyAPIView):
     permission_classes=[IsAuthenticated]
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+    lookup_field = "uuid"
+
     def get(self, request , *args , **kwargs):
         user = self.request.user
         order = self.get_object()
@@ -101,6 +103,7 @@ class OrderRowAPIView(ListCreateAPIView):
     permission_classes=[IsAuthenticated]
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+    lookup_field = "uuid"
 
     def get_order_rows(self):
         user = self.request.user
@@ -120,15 +123,16 @@ class OrderRowAPIView(ListCreateAPIView):
         user = self.request.user
         orderRows = self.get_order_rows()
         order = self.get_object()
-        current_item = OrderRow.objects.filter(order=order , product=product)
 
         if len(orderRows) > 20:
             raise NotAcceptable("If you want ordering more then 10 products, please send a ticket to us!")
 
         try:
-            product = get_object_or_404(Product,pk=request.data["product"])
+            product = get_object_or_404(Product,uuid=request.data["product"])
         except Exception as e:
             raise NotAcceptable("Please Enter a Product")
+
+        current_item = OrderRow.objects.filter(order=order , product=product)
 
         if order.status != 0:
             raise NotAcceptable("You cannot add item to in process order")
@@ -140,10 +144,11 @@ class OrderRowAPIView(ListCreateAPIView):
         if len(current_item) > 0:
             raise NotAcceptable("You already have this item in your order")
         
+        quantity = get_quantity_from_request(request , product)
+        
         orderRow = OrderRow(order=order, product = product, quantity = quantity)
         orderRow.save()
 
-        quantity = get_quantity_from_request(request , product)
         product.inventory -= quantity
         product.save()
 

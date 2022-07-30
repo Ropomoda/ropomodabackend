@@ -34,7 +34,7 @@ class CartItemAPIView(ListCreateAPIView):
         user = self.request.user
         cart = get_object_or_404(Cart,user=user)
         try:
-            product = get_object_or_404(Product,pk=request.data["product"])
+            product = get_object_or_404(Product,uuid=request.data["product"])
         except Exception as e:
             raise NotAcceptable("Please Enter a Product")
         current_item = CartItem.objects.filter(cart=cart , product=product)
@@ -57,6 +57,7 @@ class CartItemView(RetrieveUpdateDestroyAPIView):
     permission_classes=[IsAuthenticated]
     serializer_class = CartSerializer
     queryset = CartItem.objects.all()
+    lookup_field = "uuid"
 
     def get(self, request , *args , **kwargs):
         user = self.request.user

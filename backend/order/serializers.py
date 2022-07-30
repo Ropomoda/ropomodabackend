@@ -23,7 +23,6 @@ class OrderRowSerializer(serializers.HyperlinkedModelSerializer):
         model = OrderRow
         fields = [
                     'uuid',
-                    'order',
                     'product', 
                     'quantity', 
         ]
