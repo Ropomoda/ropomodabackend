@@ -10,7 +10,7 @@ class ProductImage(Extensions):
     url = models.ImageField(verbose_name=_("image"),upload_to=product_image_path)
     product = models.ForeignKey('Product', default=None, on_delete=models.RESTRICT)
     def __str__(self):
-        return f'{self.id} {self.product.title_fa}'
+        return f'{self.uuid} {self.product.title_fa}'
 class Product(Extensions):
     code = models.IntegerField(db_index=True , default=100000 )
     title_fa = models.CharField(max_length=300)

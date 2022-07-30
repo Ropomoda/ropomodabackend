@@ -16,4 +16,4 @@ class Collection(Extensions):
     is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.id} {self.title_fa}" 
+        return f"{self.uuid} {self.title_fa}" 

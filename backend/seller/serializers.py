@@ -7,7 +7,7 @@ class SellerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Seller
         fields = [
-                    'id',
+                    'uuid',
                     'store_name', 
                     'logo', 
         ]

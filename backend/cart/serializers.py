@@ -20,7 +20,7 @@ class CartItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CartItem
         fields = [
-            'id',
+            'uuid',
             'product',
             'quantity',
         ]

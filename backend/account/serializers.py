@@ -8,16 +8,17 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = [
             'mobile',
+            'email',
         ]
         
 
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer()
     class Meta:
         model = Profile
         fields = [
-            'user',
             'name', 
+            'national_id',
+            'phone_number',
         ]
 
         
@@ -25,7 +26,7 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Address
         fields = [
-            'id',
+            'uuid',
             'name',
             'description', 
             'longitude', 

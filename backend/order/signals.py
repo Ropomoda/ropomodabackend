@@ -25,7 +25,7 @@ def send_order_notification_to_seller(sender, instance, created, **kwargs):
 def send_order_notification_to_customer(sender, instance, created, **kwargs):
     if created:
         profile = Profile. objects.get(user=instance.buyer)
-        tracking_code = str(instance.id)[:8]
+        tracking_code = str(instance.uuid)[:8]
         payload = json.dumps([
             { "Parameter":"name" , "ParameterValue": profile.name},
             { "Parameter":"code" , "ParameterValue": tracking_code},

@@ -10,7 +10,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Order
         fields = [
-                    'id',
+                    'uuid',
                     'status', 
                     'address', 
                     'payment_method', 
@@ -22,7 +22,7 @@ class OrderRowSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = OrderRow
         fields = [
-                    'id',
+                    'uuid',
                     'order',
                     'product', 
                     'quantity', 
