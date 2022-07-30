@@ -1,6 +1,6 @@
 This is [Ropomoda](https://www.ropomoda.com/) backend project 
 
-![build](https://github.com/RopoModa/ropomodabackend/actions/workflows/python-app.yml/badge.svg)
+![build and push on registry.ropomoda.com](https://github.com/RopoModa/ropomodabackend/actions/workflows/docker-image.yml/badge.svg)
 
 ## Ropomoda Back-end project
 
