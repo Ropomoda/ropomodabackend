@@ -23,13 +23,11 @@ class Order(Extensions):
         (14 , "CANCELED_BY_ADMIN"),
     )
     status = models.IntegerField(choices=STATUS_CHOICES , default=0)
-    PAYMENT_METHOD_CHOICES = (
-        (0 , "ZARRIN_PAL"),
-        (1 , "COD"),
-    )
+    
+    total_price = models.IntegerField(default=0)
+   
     address = models.ForeignKey('account.Address' , on_delete=models.CASCADE)
-    payment_method = models.IntegerField(choices=PAYMENT_METHOD_CHOICES)
-    is_payed = models.BooleanField(default=False)
+    payment = models.ForeignKey('billing.Payment' , on_delete=models.CASCADE , default=None)
     is_closed = models.BooleanField(default=False)
     
     def __str__(self):

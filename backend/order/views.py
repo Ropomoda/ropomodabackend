@@ -1,21 +1,19 @@
 from django.shortcuts import get_object_or_404
 from account.models.address import Address
+from billing.models.payment import Payment
 from store.models.product import Product
 from .models import *
 from .serializers import *
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView , RetrieveDestroyAPIView
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied , NotAcceptable
 from django.utils.translation import ugettext_lazy as _
 from .models import *
 from .serializers import *
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from account.models import Profile
 from .utils import get_quantity_from_request
 
 class OrderAPIView(ListCreateAPIView):
@@ -51,10 +49,12 @@ class OrderAPIView(ListCreateAPIView):
         except Exception as e:
             raise NotAcceptable("Please Enter a payment_method")
 
+        payment = Payment.objects.create(payment_method=payment_method)
+
         order = Order.objects.create(
             buyer=user,
             address=address,
-            payment_method=payment_method,
+            payment=payment
         )
 
         serializer_context={'request': request}
@@ -145,6 +145,9 @@ class OrderRowAPIView(ListCreateAPIView):
             raise NotAcceptable("You already have this item in your order")
         
         quantity = get_quantity_from_request(request , product)
+        
+        order.total_price += quantity * product.selling_price
+        order.save()
         
         orderRow = OrderRow(order=order, product = product, quantity = quantity)
         orderRow.save()

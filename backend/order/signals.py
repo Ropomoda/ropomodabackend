@@ -30,7 +30,7 @@ def send_order_notification_to_customer(sender, instance, created, **kwargs):
         payload = json.dumps([
             { "Parameter":"name" , "ParameterValue": profile.name},
             { "Parameter":"code" , "ParameterValue": tracking_code},
-            { "Parameter":"link" , "ParameterValue": f'ropomoda.com/t/{tracking_code}'},
+            { "Parameter":"link" , "ParameterValue": f'rpmd.ir/t/{tracking_code}'},
         ])
         
         Notice.objects.create(to=instance.buyer , 
@@ -43,7 +43,7 @@ def send_order_notification_to_customer(sender, instance, created, **kwargs):
             { "Parameter":"name" , "ParameterValue": profile.name},
             { "Parameter":"transfererName" , "ParameterValue": "پست"},
             { "Parameter":"code" , "ParameterValue": tracking_code},
-            { "Parameter":"link" , "ParameterValue": f'ropomoda.com/t/{tracking_code}'},
+            { "Parameter":"link" , "ParameterValue": f'rpmd.ir/t/{tracking_code}'},
         ])
         
         Notice.objects.create(to=instance.buyer , 
@@ -55,7 +55,7 @@ def send_order_notification_to_customer(sender, instance, created, **kwargs):
         payload = json.dumps([
             { "Parameter":"name" , "ParameterValue": profile.name},
             { "Parameter":"code" , "ParameterValue": tracking_code},
-            { "Parameter":"link" , "ParameterValue": f'ropomoda.com/t/{tracking_code}'},
+            { "Parameter":"link" , "ParameterValue": f'rpmd.ir/t/{tracking_code}'},
         ])
         
         Notice.objects.create(to=instance.buyer , 
@@ -67,7 +67,7 @@ def send_order_notification_to_customer(sender, instance, created, **kwargs):
         payload = json.dumps([
             { "Parameter":"name" , "ParameterValue": profile.name},
             { "Parameter":"code" , "ParameterValue": tracking_code},
-            { "Parameter":"link" , "ParameterValue": f'ropomoda.com/t/{tracking_code}'},
+            { "Parameter":"link" , "ParameterValue": f'rpmd.ir/t/{tracking_code}'},
         ])
         
         Notice.objects.create(to=instance.buyer , 

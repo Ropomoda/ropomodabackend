@@ -11,13 +11,15 @@ class ProductList(APIView):
     serializer_class = ProductSerializer
     def get(self, request):
         category_id = self.request.query_params.get('category')
-        collection_id = self.request.query_params.get('category')
+        collection_id = self.request.query_params.get('collection')
+
         if(category_id):
             products = Product.objects.filter(category=category_id)
         elif (collection_id):
             products = Product.objects.filter(active_collection=collection_id)
         else:
             products = []
+
         serializer_context={'request': request}
         serializer = ProductSerializer(products, many=True , context=serializer_context)
         return Response(serializer.data)
