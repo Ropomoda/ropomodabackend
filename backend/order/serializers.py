@@ -1,9 +1,8 @@
 
-from django.urls import path, include
-from rest_framework import routers, serializers, viewsets
+from rest_framework import serializers
 from .models import *
 from account.serializers import AddressSerializer
-from store.serializers import ProductSerializer
+from store.serializers import VarietySerializer
 from billing.serializers import PaymentSerializer
 
 
@@ -21,12 +20,12 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         ]
         
 class OrderRowSerializer(serializers.HyperlinkedModelSerializer):
-    product = ProductSerializer()
+    variety = VarietySerializer()
     class Meta:
         model = OrderRow
         fields = [
                     'uuid',
-                    'product', 
+                    'variety', 
                     'quantity', 
         ]
         

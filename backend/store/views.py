@@ -4,6 +4,7 @@ from .models import *
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
 
 
 class ProductList(APIView):
@@ -44,4 +45,17 @@ class VarietyList(APIView):
         varieties = Variety.objects.filter(product=product)
         serializer_context={'request': request}
         serializer = VarietySerializer(varieties,many=True, context=serializer_context)
+        return Response(serializer.data)
+
+class VarietyImageList(ListAPIView):
+    permission_classes=[IsAdminUserOrReadOnly]
+    serializer_class = VarietyImageSerializer
+    lookup_field = "uuid"
+    queryset = Variety.objects.all()
+    
+    def get(self, request,code=None):
+        variety = self.get_object()
+        images = VarietyImage.objects.filter(variety=variety)
+        serializer_context={'request': request}
+        serializer = VarietyImageSerializer(images, context=serializer_context)
         return Response(serializer.data)

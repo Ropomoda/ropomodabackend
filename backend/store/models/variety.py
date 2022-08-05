@@ -41,4 +41,4 @@ class VarietyImage(Extensions):
     url = models.ImageField(verbose_name="image",upload_to=product_image_path)
     variety = models.ForeignKey('Variety', default=None, on_delete=models.RESTRICT)
     def __str__(self):
-        return f'{self.uuid} {self.product.title_fa}'
+        return f'{self.uuid} {self.variety.product.title_fa}'

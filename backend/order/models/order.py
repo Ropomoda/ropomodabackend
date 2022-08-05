@@ -13,14 +13,15 @@ class Order(Extensions):
 
     buyer = models.ForeignKey(to=User , on_delete=models.CASCADE )
     STATUS_CHOICES = (
+        (-3 , "CANCELED_BY_ADMIN"),
+        (-2 , "CANCELED_BY_SELLER"),
+        (-1 , "CANCELED_BY_USER"),
         (0 , "INITIATED"),
-        (3 , "ACCEPTED_PROCESSING"),
+        (1 , "REGISTERED"),
+        (2 , "PROCESSING"),
         (6 , "DELIVERED_POSTOFFICE"),
         (9 , "DELIVERY_POSTMAN"),
         (11 , "DELIVERY_CUSTOMER"),
-        (12 , "CANCELED_BY_USER"),
-        (13 , "CANCELED_BY_SELLER"),
-        (14 , "CANCELED_BY_ADMIN"),
     )
     status = models.IntegerField(choices=STATUS_CHOICES , default=0)
     

@@ -297,6 +297,22 @@ CACHE_TTL = 60 * 15
 
 # GRAPPELLI_ADMIN_TITLE = 'Ropo Moda Admin'
 
+# Celery settings
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+
+
+# cache config
+CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+            "KEY_PREFIX": os.getenv('CACHE_KEY_PREFIX')
+        }
+}
 
 
 if not DEBUG:
@@ -326,17 +342,6 @@ if not DEBUG:
     
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
     
-    # cache config
-    
-    CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.getenv('CACHE_LOCATION'),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        },
-        "KEY_PREFIX": os.getenv('CACHE_KEY_PREFIX')
-    }
-    }
+
     # s3 storage config
     from .cdn.conf import * # s3

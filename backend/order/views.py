@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from account.models.address import Address
 from billing.models.payment import Payment
-from store.models.product import Product
+from store.models import Variety
 from .models import *
 from .serializers import *
 from rest_framework import status
@@ -91,9 +91,9 @@ class OrderView(RetrieveDestroyAPIView):
 
         orderRows = OrderRow.objects.filter(order=order)
         for orderRow in orderRows:
-            product = orderRow.product
-            product.inventory += orderRow.quantity
-            product.save()
+            variety = orderRow.variety
+            variety.inventory += orderRow.quantity
+            variety.save()
 
         return Response({
             "detail": _("Order Canceled")
@@ -125,35 +125,33 @@ class OrderRowAPIView(ListCreateAPIView):
         order = self.get_object()
 
         if len(orderRows) > 20:
-            raise NotAcceptable("If you want ordering more then 10 products, please send a ticket to us!")
+            raise NotAcceptable("If you want ordering more then 20 products, please send a ticket to us!")
 
         try:
-            product = get_object_or_404(Product,uuid=request.data["product"])
+            variety = get_object_or_404(Variety,uuid=request.data["variety"])
         except Exception as e:
-            raise NotAcceptable("Please Enter a Product")
+            raise NotAcceptable("Please Enter a variety")
 
-        current_item = OrderRow.objects.filter(order=order , product=product)
+        current_item = OrderRow.objects.filter(order=order , variety=variety)
 
         if order.status != 0:
             raise NotAcceptable("You cannot add item to in process order")
-        if product.seller == user:
-            raise PermissionDenied("This is Your Product")
+        if variety.seller == user:
+            raise PermissionDenied("This is Your variety")
 
-        if product.seller == user:
-            raise PermissionDenied("This is Your Product")
         if len(current_item) > 0:
             raise NotAcceptable("You already have this item in your order")
         
-        quantity = get_quantity_from_request(request , product)
+        quantity = get_quantity_from_request(request , variety)
         
-        order.total_price += quantity * product.selling_price
+        order.total_price += quantity * variety.selling_price
         order.save()
         
-        orderRow = OrderRow(order=order, product = product, quantity = quantity)
+        orderRow = OrderRow(order=order, variety=variety, quantity = quantity)
         orderRow.save()
 
-        product.inventory -= quantity
-        product.save()
+        variety.inventory -= quantity
+        variety.save()
 
         serializer_context={'request': request}
         serializer = OrderRowSerializer(orderRow , context=serializer_context)

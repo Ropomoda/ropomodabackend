@@ -1,6 +1,6 @@
 import requests
 
-from notice.sms_pannel_temp_codes import STORE_WELCOME_AUTH_TOKEN
+from notice.consts import STORE_WELCOME_AUTH_TOKEN
 sms_panel_address = "https://restfulsms.com/api/" 
 sms_panel_user_api_key = '98047a5e6869a834c01a7a5e'
 sms_panel_user_secret_key = 'C!@6#te6)*it%B&'
