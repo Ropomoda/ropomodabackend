@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from store.models.product import Product
+from store.models.variety import Variety
 from .models import *
 from .serializers import *
 from rest_framework import status
@@ -34,18 +34,18 @@ class CartItemAPIView(ListCreateAPIView):
         user = self.request.user
         cart = get_object_or_404(Cart,user=user)
         try:
-            product = get_object_or_404(Product,uuid=request.data["product"])
+            variety = get_object_or_404(Variety,uuid=request.data["variety"])
         except Exception as e:
-            raise NotAcceptable("Please Enter a Product")
-        current_item = CartItem.objects.filter(cart=cart , product=product)
+            raise NotAcceptable("Please Enter a variety")
+        current_item = CartItem.objects.filter(cart=cart , variety=variety)
 
-        if product.seller == user:
+        if variety.seller == user:
             raise PermissionDenied("This is Your Product")
         if len(current_item) > 0:
             raise NotAcceptable("You Already have this item in your cart")
         
-        quantity = get_quantity_from_request(request , product)
-        cartItem = CartItem(cart=cart, product = product, quantity = quantity)
+        quantity = get_quantity_from_request(request , variety)
+        cartItem = CartItem(cart=cart, variety = variety, quantity = quantity)
         cartItem.save()
         serializer_context={'request': request}
         serializer = CartItemSerializer(cartItem , context=serializer_context)

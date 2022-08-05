@@ -4,7 +4,12 @@ from .models import *
 
 
 admin.site.register(Product)
-admin.site.register(ProductImage)
+admin.site.register(VarietyImage)
+admin.site.register(Variety)
+admin.site.register(Color)
+admin.site.register(Size)
+
+
 
 
 

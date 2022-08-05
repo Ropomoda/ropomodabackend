@@ -27,8 +27,21 @@ class ProductList(APIView):
 class ProductDetail(APIView):
     permission_classes=[IsAdminUserOrReadOnly]
     serializer_class = ProductSerializer
+    lookup_field = "code"
     def get(self, request,code=None):
         product = get_object_or_404(Product , code=code)
         serializer_context={'request': request}
         serializer = ProductSerializer(product, context=serializer_context)
+        return Response(serializer.data)
+
+
+class VarietyList(APIView):
+    permission_classes=[IsAdminUserOrReadOnly]
+    lookup_field = "code"
+
+    def get(self, request,code=None):
+        product = get_object_or_404(Product , code=code)
+        varieties = Variety.objects.filter(product=product)
+        serializer_context={'request': request}
+        serializer = VarietySerializer(varieties,many=True, context=serializer_context)
         return Response(serializer.data)

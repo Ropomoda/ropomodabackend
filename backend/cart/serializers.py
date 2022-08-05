@@ -4,7 +4,7 @@ from rest_framework import routers, serializers, viewsets
 
 from .models import *
 from account.serializers import UserSerializer
-from store.serializers import ProductSerializer
+from store.serializers import VarietySerializer
 
 class CartSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
@@ -15,13 +15,13 @@ class CartSerializer(serializers.HyperlinkedModelSerializer):
         ]
         
 class CartItemSerializer(serializers.HyperlinkedModelSerializer):
-    product = ProductSerializer()
+    variety = VarietySerializer()
 
     class Meta:
         model = CartItem
         fields = [
             'uuid',
-            'product',
+            'variety',
             'quantity',
         ]
         

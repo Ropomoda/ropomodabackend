@@ -9,7 +9,7 @@ class CartItem(Extensions):
         verbose_name_plural = "CartItems"
 
     cart = models.ForeignKey('Cart',on_delete=models.CASCADE)
-    product = models.ForeignKey('store.Product',on_delete=models.CASCADE)
+    variety = models.ForeignKey('store.Variety',on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
     def __str__(self):
