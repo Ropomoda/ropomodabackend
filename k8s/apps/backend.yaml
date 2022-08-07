@@ -1,61 +1,97 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ropomoda-backend-master
+  name: backend-master-service
   labels:
-    app: ropomoda-backend-master
+    app: backend-master-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ropomoda-backend-master
+      app: backend-master-service
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: ropomoda-backend-master
-        name: ropomoda-backend-master
+        app: backend-master-service
+        name: backend-master-service
     spec:
       containers:
-        - name: ropomoda-backend-master
-          image: https://registry.ropomoda.com/ropomoda-backend:latest
+        - name: backend-master-service
+          image: registry.ropomoda.com/backend:TAG
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 80
+            - containerPort: 8000
               protocol: TCP
               name: http
           resources:
             limits:
               &a1
-              cpu: "1"
+              cpu: "0.5"
               ephemeral-storage: 1G
-              memory: 1G
+              memory: 0.5G
             requests: *a1
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          volumeMounts: []
+          command:
+            - sh
+          args:
+            - backend.sh
           env:
-            - name: prod
-              value: DJANGO_MODE
+            - name: DJANGO_MODE
+              value: production
+            - name: DB_NAME
+              value: ropomoda-master
+            - name: DB_USER
+              value: root
+            - name: DB_PASS
+              value: PASSWORD
+            - name: DB_HOST
+              value: db
+            - name: DB_PORT
+              value: 5432
+            - name: DJANGO_SUPERUSER_MOBILE
+              value: +989904671504
+            - name: DJANGO_SUPERUSER_PASSWORD
+              value: PASSWORD
+            - name: S3_ACCESS_KEY_ID
+              value: SECRET
+            - name: S3_SECRET_ACCESS_KEY
+              value: SECRET
+            - name: S3_STORAGE_BUCKET_NAME
+              value: ropomoda-public-staticfiles
+            - name: CACHE_LOCATION
+              value: redis://redis:6379/1
+            - name: CACHE_KEY_PREFIX
+              value: ropomodabackendcache
+            - name: DJANGO_SECRET_KEY
+              value: SECRET
+            - name: ZP_MERCHANT
+              value: SECRET
+            - name: CELERY_BROKER_URL
+              value: redis://redis:6379/5
+            - name: CELERY_RESULT_BACKEND
+              value: redis://redis:6379/5
+          volumeMounts: []
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       imagePullSecrets:
-        - name: docker-reg-2oumtvjh
+        - name: docker-reg-bwaa76c8
       volumes: []
 ---
 kind: Secret
 apiVersion: v1
 metadata:
-  name: docker-reg-2oumtvjh
+  name: docker-reg-bwaa76c8
 stringData:
-  .dockerconfigjson: '{"auths":{"https://registry.ropomoda.com":{"username":"ropomoda","password":"DfT4HHsNsDKSZFZ6VhubrehRg4qxAbxKR","auth":"cm9wb21vZGE6RGZUNEhIc05zREtTWkZaNlZodWJyZWhSZzRxeEFieEtS"}}}'
+  .dockerconfigjson: '{"auths":{"https://registry.ropomoda.com":{"username":"ropomoda","password":"PASSWORD","auth":"SECRET"}}}'
 type: kubernetes.io/dockerconfigjson
 ---
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: ropomoda-backend-master-custom
+  name: backend-master-service-custom
 spec:
   host: api.ropomoda.com
   port:
@@ -65,7 +101,7 @@ spec:
     termination: edge
   to:
     kind: Service
-    name: ropomoda-backend-master
+    name: backend-master-service
     weight: 100
   wildcardPolicy: None
 ---
@@ -73,8 +109,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: ropomoda-backend-master
-  name: ropomoda-backend-master
+    app: backend-master-service
+  name: backend-master-service
 spec:
   ports:
     - name: http
@@ -82,5 +118,5 @@ spec:
       targetPort: http
       port: 80
   selector:
-    app: ropomoda-backend-master
+    app: backend-master-service
   type: ClusterIP
