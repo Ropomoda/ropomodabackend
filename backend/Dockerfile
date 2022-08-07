@@ -1,8 +1,8 @@
 FROM python:3.9.7-slim
+USER daemon
 
 COPY . /app
 WORKDIR /app
-
 RUN python3 -m venv /opt/venv
 
 RUN /opt/venv/bin/pip install --default-timeout=100 pip --upgrade && \
