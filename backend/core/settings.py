@@ -332,10 +332,13 @@ if not DEBUG:
 
     # rest framework config
 
-    REST_FRAMEWORK |= {
-        'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        )
+    REST_FRAMEWORK = {
+        **REST_FRAMEWORK,
+        **{
+            'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            )
+        }
     }
     
     # secret key config
